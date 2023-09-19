@@ -10,10 +10,12 @@ class Sensor(models.Model):
     class Meta:
         verbose_name = 'Датчик'
         verbose_name_plural = 'Датчики'
+    def __str__(self):
+        return self.name
 
 
-class Measurments(models.Model):
-    temperature = models.DecimalField(max_digits=2,
+class Measurment(models.Model):
+    temperature = models.DecimalField(max_digits=3,
                                       decimal_places=1,
                                       verbose_name='температура')
     created_at = models.DateField(auto_now_add=True)
@@ -22,3 +24,6 @@ class Measurments(models.Model):
     class Meta:
         verbose_name = 'Измерение'
         verbose_name_plural = 'Измерения'
+
+    def __str__(self):
+        return f'temperature: {self.temperature},sensor: {self.sensor}, created {self.created_at}'
