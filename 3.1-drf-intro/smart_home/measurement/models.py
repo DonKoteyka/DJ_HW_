@@ -18,7 +18,7 @@ class Measurment(models.Model):
     temperature = models.DecimalField(max_digits=3,
                                       decimal_places=1,
                                       verbose_name='температура')
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateField(auto_now=True)
     sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
 
     class Meta:
