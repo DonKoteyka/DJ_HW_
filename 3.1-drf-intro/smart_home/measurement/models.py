@@ -19,7 +19,7 @@ class Measurment(models.Model):
                                       decimal_places=1,
                                       verbose_name='температура')
     created_at = models.DateField(auto_now=True)
-    sensor = models.ForeignKey(Sensor, on_delete=models.CASCADE)
+    sensor = models.ForeignKey(Sensor, related_name='sensor', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Измерение'

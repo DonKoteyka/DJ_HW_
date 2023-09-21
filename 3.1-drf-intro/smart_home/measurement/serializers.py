@@ -11,14 +11,15 @@ from .models import Sensor, Measurment
     # description = serializers.CharField()
 
 class MeasurementSerializer(serializers.ModelSerializer):
+    sensor = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Measurment
         fields = ['id','temperature', 'created_at', 'sensor']
 
 
 class SensorDetailSerializer(serializers.ModelSerializer):
-    measurements = MeasurementSerializer(read_only=True, many=True)
+    # measurements = MeasurementSerializer(read_only=True, many=True)
 
     class Meta:
         model = Sensor
-        fields = ['id', 'name', 'description', 'measurements']
+        fields = ['id', 'name', 'description']

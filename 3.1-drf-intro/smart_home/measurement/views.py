@@ -6,7 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Measurment, Sensor
-from .serializers import SensorDetailSerializer
+from .serializers import SensorDetailSerializer, MeasurementSerializer
 
 
 # class API(APIView):
@@ -14,6 +14,8 @@ class API(ListCreateAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorDetailSerializer
 
+    # def perform_create(self, serializer):
+    #     serializer.save(owner=self.request.user)
 
     # def get(self, request):
     #     get_bd = Sensor.objects.all()
@@ -34,9 +36,6 @@ class APIputch(RetrieveUpdateAPIView):
     queryset = Sensor.objects.all()
     serializer_class = SensorDetailSerializer
 
-
-
-
     # def get(self, request, pk):
     #     sensor_get = Sensor.objects.get(id=pk)
     #     data = SensorDetailSerializer(sensor_get)
@@ -50,7 +49,10 @@ class APIputch(RetrieveUpdateAPIView):
     #     return Response('запись обновлена')
 
 
-class APIMesurments(APIView):
+class APIMesurments(ListCreateAPIView):
+    queryset = Measurment.objects.all()
+    serializer_class = MeasurementSerializer
+
     # def post(self, request):
     #     res = request.GET
     #     new_measurmet = Sensor(
