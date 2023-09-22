@@ -11,7 +11,7 @@ from .models import Sensor, Measurment
     # description = serializers.CharField()
 
 class MeasurementSerializer(serializers.ModelSerializer):
-    sensor = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
+    # sensor = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
     class Meta:
         model = Measurment
         fields = ['id','temperature', 'created_at', 'sensor']

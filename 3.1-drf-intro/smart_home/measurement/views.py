@@ -1,7 +1,7 @@
 # TODO: опишите необходимые обработчики, рекомендуется использовать generics APIView классы:
 # TODO: ListCreateAPIView, RetrieveUpdateAPIView, CreateAPIView
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, ListCreateAPIView
+from rest_framework.generics import ListAPIView, RetrieveUpdateAPIView, ListCreateAPIView, CreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -49,8 +49,8 @@ class APIputch(RetrieveUpdateAPIView):
     #     return Response('запись обновлена')
 
 
-class APIMesurments(ListCreateAPIView):
-    queryset = Measurment.objects.all()
+class APIMesurments(CreateAPIView):
+    get_queryset = Measurment.objects.all()
     serializer_class = MeasurementSerializer
 
     # def post(self, request):
@@ -61,4 +61,3 @@ class APIMesurments(ListCreateAPIView):
     #     )
     #     new_measurmet.save()
     #     return Response('новая запись добавлена')
-    pass
