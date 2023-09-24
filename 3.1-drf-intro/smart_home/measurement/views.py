@@ -53,11 +53,14 @@ class APIMesurments(CreateAPIView):
     get_queryset = Measurment.objects.all()
     serializer_class = MeasurementSerializer
 
-    # def post(self, request):
-    #     res = request.GET
-    #     new_measurmet = Sensor(
-    #         sensor=res.get('sensor'),
-    #         temperature=res.get('temperature')
-    #     )
-    #     new_measurmet.save()
-    #     return Response('новая запись добавлена')
+
+    # def post(self, request, *args, **kwargs):
+    #     sensor = request.data['sensor']
+    #     temperature = request.data['temperature']
+    #     file = request.data['image']
+    #     user = Measurment.objects.get(sensor=sensor)
+    #     user.image = file
+    #     user.sensor = sensor
+    #     user.temperature = temperature
+    #     user.save()
+    #     return Response("Image updated!", status=status.HTTP_200_OK)

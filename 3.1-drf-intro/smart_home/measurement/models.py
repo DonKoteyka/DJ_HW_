@@ -1,4 +1,8 @@
+import os
+
 from django.db import models
+
+from smart_home.settings import MEDIA_ROOT, BASE_DIR
 
 
 # TODO: опишите модели датчика (Sensor) и измерения (Measurement)
@@ -20,6 +24,7 @@ class Measurment(models.Model):
                                       verbose_name='температура')
     created_at = models.DateField(auto_now=True)
     sensor = models.ForeignKey(Sensor, related_name='sensor', on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='image', blank=True)
 
     class Meta:
         verbose_name = 'Измерение'
@@ -27,3 +32,7 @@ class Measurment(models.Model):
 
     def __str__(self):
         return f'temperature: {self.temperature},sensor: {self.sensor}, created {self.created_at}'
+    #
+    # def upload_to(instance, filename):
+    #     return '/'.join(['images', str(instance.sensor), filename])
+
