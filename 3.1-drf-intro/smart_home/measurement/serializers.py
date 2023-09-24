@@ -13,7 +13,7 @@ from .models import Sensor, Measurment
 
 class MeasurementSerializer(serializers.ModelSerializer):
     # sensor = serializers.PrimaryKeyRelatedField(many=True, read_only=True)
-    # image = ImageField(max_length=None, allow_empty_file=True)
+    image = ImageField(max_length=None, allow_empty_file=True)
     class Meta:
         model = Measurment
         fields = ['id','temperature', 'created_at', 'sensor', 'image']
