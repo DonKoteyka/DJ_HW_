@@ -20,27 +20,20 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stock
-        fields = ['address', 'products']
+        fields = ['address', 'products', 'positions']
+
     # настройте сериализатор для склада
 
     def create(self, validated_data):
-        # достаем связанные данные для других таблиц
         positions = validated_data.pop('positions')
-
-        # создаем склад по его параметрам
         stock = super().create(validated_data)
-
-        # здесь вам надо заполнить связанные таблицы
-        # в нашем случае: таблицу StockProduct
-        # с помощью списка positions
         for i in positions:
-            item = StockProduct(
-                product=i.get('product'),
-                quantity=i.get('quantity'),
-                price=i.get('price'),
-                stock=stock.id
+            StockProduct.objects.create(
+                product=i['product'],
+                quantity=i['quantity'],
+                price=i['price'],
+                stock=stock
             )
-            item.save()
 
         return stock
 
