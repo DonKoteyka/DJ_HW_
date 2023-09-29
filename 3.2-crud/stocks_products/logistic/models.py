@@ -8,8 +8,10 @@ class Product(models.Model):
 
     def __str__(self):
         return f'title: {self.title}'
+
     class Meta:
         verbose_name_plural = 'Товары'
+
 
 class Stock(models.Model):
     address = models.CharField(max_length=200, unique=True)
@@ -18,8 +20,10 @@ class Stock(models.Model):
         through='StockProduct',
         related_name='stocks',
     )
+
     def __str__(self):
         return f'address: {self.address}/n products: {self.products}'
+
     class Meta:
         verbose_name_plural = 'Склад'
 
@@ -41,6 +45,7 @@ class StockProduct(models.Model):
         decimal_places=2,
         validators=[MinValueValidator(0)],
     )
+
     class Meta:
         verbose_name_plural = 'Склад-товары'
 
