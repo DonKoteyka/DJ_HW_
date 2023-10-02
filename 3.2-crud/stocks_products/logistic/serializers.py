@@ -12,27 +12,29 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductPositionSerializer(serializers.ModelSerializer):
     class Meta:
         model = StockProduct
-        fields = ['product', 'quantity', 'price']
+        fields = ['product', 'quantity', 'price', 'id']
+
 
 class StockSerializer(serializers.ModelSerializer):
     positions = ProductPositionSerializer(many=True)
 
     class Meta:
         model = Stock
-        fields = ['address',  'positions']
+        fields = ['id', 'address', 'positions']
 
     # настройте сериализатор для склада
 
     def create(self, validated_data):
-        stock = super().create(validated_data)
+
         positions = validated_data.pop('positions')
+        stock = super().create(validated_data)
 
         for i in positions:
             StockProduct.objects.create(
+                stock=stock,
                 product=i['product'],
                 quantity=i['quantity'],
-                price=i['price'],
-                stock=stock
+                price=i['price']
             )
 
         return stock
