@@ -23,7 +23,7 @@ class AdvertisementSerializer(serializers.ModelSerializer):
     class Meta:
         model = Advertisement
         fields = ('id', 'title', 'description', 'creator',
-                  'status', 'created_at', )
+                  'status', 'created_at',)
 
     def create(self, validated_data):
         """Метод для создания"""
@@ -37,9 +37,18 @@ class AdvertisementSerializer(serializers.ModelSerializer):
         validated_data["creator"] = self.context["request"].user
         return super().create(validated_data)
 
-    def validate(self, data):
-        """Метод для валидации. Вызывается при создании и обновлении."""
+    # def validate(self, data):
+    #     """Метод для валидации. Вызывается при создании и обновлении."""
+    #
+    #     # TODO: добавьте требуемую валидацию
+    #
+    #     return data
 
+    def validate_advertisement(self, data):
+        """Метод для валидации. Вызывается при создании и обновлении."""
+        print(Advertisement.object.get(status='OPEN'))
+        if len(Advertisement.objects.filter(status='OPEN')) <= 2:
+            raise ValueError('Превышение количества открытых объявлений')
         # TODO: добавьте требуемую валидацию
 
         return data
