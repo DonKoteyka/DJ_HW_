@@ -1,3 +1,4 @@
+from django_filters import DateFromToRangeFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.viewsets import ModelViewSet
 
@@ -10,10 +11,11 @@ class AdvertisementViewSet(ModelViewSet):
     queryset = Advertisement.objects.all()
     serializer_class = AdvertisementSerializer
     """ViewSet для объявлений."""
-    permission_classes = [IsOwner]
+    permission_classes = (IsOwner, IsAuthenticated)
     # TODO: настройте ViewSet, укажите атрибуты для кверисета,
     #   сериализаторов и фильтров
     filterset_fields = ['creator', 'created_at', 'status']
+
     def get_permissions(self):
         """Получение прав для действий."""
         if self.action in ["create", "update", "partial_update"]:
