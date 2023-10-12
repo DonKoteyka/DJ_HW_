@@ -20,10 +20,10 @@ class AdvertisementViewSet(ModelViewSet):
     # filterset_fields = ['creator', 'status']
     filterset_class = AdvertisementFilter
 
-    def perform_create(self, serializer):
-        if Advertisement.objects.filter(status='OPEN', creator_id=self.request.user.id).count() >=10:
-            raise ValueError('Превышение количества открытых объявлений')
-        super().perform_create(serializer)
+    # def perform_create(self, serializer):
+    #     if Advertisement.objects.filter(status='OPEN', creator_id=self.request.user.id).count() >=10:
+    #         raise ValueError('Превышение количества открытых объявлений')
+    #     super().perform_create(serializer)
     # def perform_update(self, serializer):
     #     if Advertisement.objects.filter(status='OPEN', creator_id=self.request.user.id).exclude().count() >=10:
     #         raise ValueError('Превышение количества открытых объявлений')
