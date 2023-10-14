@@ -29,10 +29,10 @@ def course_factory():
 @pytest.mark.django_db
 def test_get_one_course(client, course_factory):
     course = course_factory(_quantity=1)
-    response = client.get(course_api)
+    response = client.get(course_api + f'{course[0].id}/')
     data = response.json()
     assert response.status_code == 200
-    assert data[0]['name'] == course[0].name
+    assert data['name'] == course[0].name
 
 
 @pytest.mark.django_db
@@ -51,13 +51,9 @@ def test_filter_id(client, course_factory, one_course):
     max_id = 10
     random_number = random.randint(base_id, max_id+base_id)
     courses = course_factory(_quantity=max_id)
-    response = client.get(course_api + f'?id={random_number}')
+    response = client.get(course_api, {'id': random_number})
     data = response.json()[0]
     assert response.status_code == 200
-    # '''
-    # Почему-то при запуске через консоль идёт не правильное смещение
-    # '''
-    # assert data['id'] == courses[random_number - 5].id
     assert data['id'] == courses[random_number-base_id-1].id
 
 
@@ -67,7 +63,7 @@ def test_filter_name(client, course_factory):
     random_number = random.randint(5, max_id)
     courses = course_factory(_quantity=max_id)
     random_name = courses[random_number - 1].name
-    response = client.get(course_api + f'?name={random_name}')
+    response = client.get(course_api, {'name': random_name})
     data = response.json()[0]
     assert response.status_code == 200
     assert data['name'] == courses[random_number - 1].name
@@ -76,7 +72,7 @@ def test_filter_name(client, course_factory):
 @pytest.mark.django_db
 def test_create_course(client, one_course):
     pre_course_count = Course.objects.count()
-    response = client.post(course_api, data={'name': 'Python for beginners'})
+    response = client.post(course_api, {'name': 'Python for beginners'})
     course_count = Course.objects.count()
     assert response.status_code == 201
     assert pre_course_count + 1 == course_count
@@ -86,7 +82,7 @@ def test_create_course(client, one_course):
 def test_update_course(client, one_course):
     course_id = one_course.id
     pattern_name = 'Java course'
-    response = client.patch(course_api + f'{course_id}/', data={'name': f'{pattern_name}'})
+    response = client.patch(course_api + f'{course_id}/', {'name': pattern_name})
     assert response.status_code == 200
     assert Course.objects.filter(id=course_id)[0].name == pattern_name
 
