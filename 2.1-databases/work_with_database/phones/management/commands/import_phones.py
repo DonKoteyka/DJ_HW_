@@ -21,13 +21,12 @@ class Command(BaseCommand):
         for phone in phones:
             # TODO: Добавьте сохранение модели
             possition = Phone(
-                name = phone.get('name'),
-                price = phone.get('price'),
-                image = phone.get('image'),
-                release_date = phone.get('release_date'),
-                lte_exists = phone.get('lte_exists'),
-                slug = str(phone.get('name')).replace(' ', '-')
+                name=phone.get('name'),
+                price=phone.get('price'),
+                image=phone.get('image'),
+                release_date=phone.get('release_date'),
+                lte_exists=phone.get('lte_exists'),
+                slug=str(phone.get('name')).replace(' ', '-')
             )
             possition.save()
             print('Данные загружены в БД')
-
